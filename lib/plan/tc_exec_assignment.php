@@ -50,7 +50,7 @@ switch($args->doAction)
   case 'std':
     if(!is_null($args->achecked_tc))
     {
-      $open = $status_map['open']['id'];
+      $open = $status_map['aberto']['id'];
       $db_now = $db->db_now();
       $features2 = array( 'upd' => array(), 'ins' => array(), 'del' => array());
       $method2call = array( 'upd' => 'update', 'ins' => 'assign', 'del' => 'delete_by_feature_id_and_build_id');

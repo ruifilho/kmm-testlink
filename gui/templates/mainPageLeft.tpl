@@ -29,12 +29,8 @@
 {$display_left_block_5=$tlCfg->userDocOnDesktop}
 
 {if $gui->testprojectID && 
-   ($gui->grants.project_edit == "yes" || 
-    $gui->grants.tproject_user_role_assignment == "yes" ||
-    $gui->grants.cfield_management == "yes" || 
-    $gui->grants.platform_management == "yes" || 
-    $gui->grants.keywords_view == "yes")}
-    
+      ($gui->grants.project_edit == "yes" || $gui->grants.tproject_user_role_assignment == "yes" ||
+       $gui->grants.cfield_management == "yes" || $gui->grants.keywords_view == "yes")}
     {$display_left_block_1=true}
 
     <script  type="text/javascript">
@@ -47,7 +43,7 @@
                                 draggable: false,
                                 contentEl: 'testproject_topics',
                                 baseCls: 'x-tl-panel',
-                                bodyStyle: "background:#c8dce8;padding:3px;",
+                                bodyStyle: "background:#FFF;",
                                 renderTo: 'menu_left_block_{$menuLayout.testProject}',
                                 width:'100%'
                                 });
@@ -70,7 +66,7 @@
                               draggable: false,
                               contentEl: 'system_topics',
                               baseCls: 'x-tl-panel',
-                              bodyStyle: "background:#c8dce8;padding:3px;",
+                              bodyStyle: "background:#FFF;",
                               renderTo: 'menu_left_block_2',
                               width:'100%'
                              });
@@ -93,7 +89,7 @@
                                 draggable: false,
                                 contentEl: 'requirements_topics',
                                 baseCls: 'x-tl-panel',
-                                bodyStyle: "background:#c8dce8;padding:3px;",
+                                bodyStyle: "background:#FFF;",
                                 renderTo: 'menu_left_block_{$menuLayout.requirements}',
                                 width:'100%'
                                 });
@@ -114,7 +110,7 @@
                                 draggable: false,
                                 contentEl: 'testspecification_topics',
                                 baseCls: 'x-tl-panel',
-                                bodyStyle: "background:#c8dce8;padding:3px;",
+                                bodyStyle: "background:#FFF;",
                                 renderTo: 'menu_left_block_{$menuLayout.testSpecification}',
                                 width:'100%'
                                 });
@@ -244,7 +240,7 @@
                               draggable: false,
                               contentEl: 'testlink_application',
                               baseCls: 'x-tl-panel',
-                              bodyStyle: "background:#c8dce8;padding:3px;",
+                              bodyStyle: "background:#FFF;padding:3px;",
                               renderTo: 'menu_left_block_{$menuLayout.general}',
                               width:'100%'
                               });

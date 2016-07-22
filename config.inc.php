@@ -18,7 +18,7 @@
  *
  * @filesource  config.inc.php
  * @package     TestLink
- * @copyright   2005-2015, TestLink community
+ * @copyright   2005-2014, TestLink community
  * @link        http://www.testlink.org
  *
  * @internal revisions
@@ -60,7 +60,6 @@ $tlCfg->diffEngine = new stdClass();
 $tlCfg->tplanDesign = new stdClass();
 
 $tlCfg->notifications = new stdClass();
-$tlCfg->proxy = new stdClass();
 
 
 
@@ -196,7 +195,7 @@ $tlCfg->log_path = '/var/testlink/logs/'; /* unix example */
  *         user will receive a message on screen.
  * 'SILENT': same that FILE, but user will not receive message on screen.
  */
-$tlCfg->config_check_warning_mode = 'SILENT';
+$tlCfg->config_check_warning_mode = 'FILE';
 
 /**
  * ONCE_FOR_SESSION
@@ -244,12 +243,12 @@ $tlCfg->loggerFilter = null; // default defined on logger.class.php ;
  * Configure using custom_config.inc.php
  * @uses lib/functions/email_api.php
  */
-$g_smtp_host        = '[smtp_host_not_configured]';  # SMTP server MUST BE configured
+$g_smtp_host        = 'smtp.kmm.com.br';  # SMTP server MUST BE configured
 
 # Configure using custom_config.inc.php
-$g_tl_admin_email     = '[testlink_sysadmin_email_not_configured]'; # for problem/error notification
-$g_from_email         = '[from_email_not_configured]';  # email sender
-$g_return_path_email  = '[return_path_email_not_configured]';
+$g_tl_admin_email     = 'infraestrutura@kmm.com.br'; # for problem/error notification
+$g_from_email         = 'noreply@kmm.com.br';  # email sender
+$g_return_path_email  = 'infraestrutura@kmm.com.br';
 
 /**
  * Email notification priority (low by default)
@@ -267,8 +266,8 @@ $g_mail_priority = 5;
 $g_phpMailer_method = PHPMAILER_METHOD_SMTP;
 
 /** Configure only if SMTP server requires authentication */
-$g_smtp_username    = '';  # user
-$g_smtp_password    = '';  # password
+$g_smtp_username    = 'noreply@kmm.com.br';  # user
+$g_smtp_password    = 'noreplykmm';  # password
 
 /**
  * This control the connection mode to SMTP server. 
@@ -282,7 +281,7 @@ $g_smtp_connection_mode = '';
  * will depend on the SMTP server configuration and hence others may be used.
  * @global int $g_smtp_port
  */
-$g_smtp_port = 25;                        
+$g_smtp_port = 587;                        
 
 
 // ----------------------------------------------------------------------------
@@ -313,9 +312,6 @@ $tlCfg->authentication['method'] = 'DB';
 //	                              'capital' => true, 'symbol' => true);
 $tlCfg->passwordChecks = null;
 
-// Applies ONLY to the HTML input.
-// If auth method is DB, password will be stored as MD5 HASH that requires 32 chars (128 bits)
-$tlCfg->loginPagePasswordMaxLenght = 40;
 
 /**
  * Single Sign On authentication
@@ -431,8 +427,8 @@ $tlCfg->theme_dir = 'gui/themes/default/';
 $tlCfg->temp_dir = TL_ABS_PATH . 'gui' . DIRECTORY_SEPARATOR . 'templates_c' . DIRECTORY_SEPARATOR;
 
 /** Company logo (used by navigation bar and login page page) */
-$tlCfg->logo_login = 'tl-logo-transparent-25.png';
-$tlCfg->logo_navbar = 'tl-logo-transparent-12.5.png';
+$tlCfg->logo_login = 'Logo_login.png';
+$tlCfg->logo_navbar = 'logo_kmm_branca_mini.png';
 
 
 /** Login page could show an informational text */
@@ -446,17 +442,10 @@ $tlCfg->login_info = ''; // Empty by default
 $tlCfg->gui->projectView = new stdClass();
 $tlCfg->gui->projectView->pagination = new stdClass();
 $tlCfg->gui->projectView->pagination->enabled = true;
-$tlCfg->gui->projectView->pagination->length = '[20, 40, 60, -1], [20, 40, 60, "All"]';
 
 $tlCfg->gui->usersAssign = new stdClass();
 $tlCfg->gui->usersAssign->pagination = new stdClass();
 $tlCfg->gui->usersAssign->pagination->enabled = true;
-$tlCfg->gui->usersAssign->pagination->length = '[20, 40, 60, -1], [20, 40, 60, "All"]';
-
-$tlCfg->gui->planView = new stdClass();
-$tlCfg->gui->planView->pagination = new stdClass();
-$tlCfg->gui->planView->pagination->enabled = true;
-$tlCfg->gui->planView->pagination->length = '[20, 40, 60, -1], [20, 40, 60, "All"]';
 
 
 /** 
@@ -611,8 +600,7 @@ $tlCfg->gui->text_editor['steps_design'] = array('type' => 'ckeditor','toolbar' 
                                                  'height' => 100);
 
 $tlCfg->gui->text_editor['execution'] = array( 'type' => 'none');
-$tlCfg->gui->text_editor['edit_execution'] = array( 'type' => 'none', 'cols' => 80, 'rows' => 20);
-$tlCfg->gui->text_editor['display_execution_notes'] = array('type' => 'none', 'cols' => 80, 'rows' => 20);
+
 
 /** User can choose order of menu areas */
 $tlCfg->gui->layoutMainPageLeft = array( 'testProject' => 1, 'userAdministration' => 2 ,
@@ -853,10 +841,6 @@ $tlCfg->exec_cfg->steps_results_layout = 'horizontal';
 // 
 $tlCfg->exec_cfg->steps_exec = true;
 
-// this setting will work on AND mode with: 
-// $tlCfg->exec_cfg->steps_exec
-$tlCfg->exec_cfg->steps_exec_attachments = true;
-
 // When textarea is displayed to allow user to write execution notes
 // at step level, choose what to display:
 // 'empty'
@@ -892,13 +876,6 @@ $tlCfg->exec_cfg->copyLatestExecIssues->default = FALSE;
 // 'execution_id,bug_id,builds.name'
 // (see exec.inc.php, function get_bugs_for_exec())
 $tlCfg->exec_cfg->bugs_order_clause = ' ORDER BY builds.name,bug_id ';
-
-$tlCfg->exec_cfg->features = new stdClass();
-$tlCfg->exec_cfg->features->attachments = new stdClass();
-$tlCfg->exec_cfg->features->attachments->enabled = true;
-$tlCfg->exec_cfg->features->exec_duration = new stdClass();
-$tlCfg->exec_cfg->features->exec_duration->enabled = true;
-
 
 // ----------------------------------------------------------------------------
 /* [Test Specification] */
@@ -938,8 +915,7 @@ $tlCfg->testcase_cfg->duplicated_name_algorithm = new stdClass();
 //                    example: My Test Title 2
 //                    duplicated_name_algorithm->text is used as sprintf format mask
 $tlCfg->testcase_cfg->duplicated_name_algorithm->type = 'stringPrefix';
-$tlCfg->testcase_cfg->duplicated_name_algorithm->text = "%Y%m%d-%H:%M:%S";
-
+$tlCfg->testcase_cfg->duplicated_name_algorithm->text = strftime("%Y%m%d-%H:%M:%S", time());
 // $tlCfg->testcase_cfg->duplicated_name_algorithm->type = 'counterSuffix';
 // $tlCfg->testcase_cfg->duplicated_name_algorithm->text = " (%s)";
 
@@ -1619,16 +1595,6 @@ $g_tpl = array();
 // $g_tpl = array('tcView'  => 'custom_tcView.tpl',
 //                 'tcSearchView' => 'myOwnTCSearchView.tpl',
 //                 'tcEdit' => 'tcEdit_ultraCool.tpl');
-
-// ----------------------------------------------------------------------------
-/* [PROXY] */
-/* Used only */ 
-/* mantissoapInterface.class.php */
-/* jirasoapInterface.class.php */
-$tlCfg->proxy->host = null;
-$tlCfg->proxy->port = null;
-$tlCfg->proxy->login = null;
-$tlCfg->proxy->password = null;
 
 
 

@@ -429,7 +429,16 @@ class TLSmarty extends Smarty
                    'upload' => TL_THEME_IMG_DIR . 'upload_16.png',
                    'upload_greyed' => TL_THEME_IMG_DIR . 'upload_16_greyed.png',
                    'warning' => TL_THEME_IMG_DIR . 'error_triangle.png',
-                   'wrench' => TL_THEME_IMG_DIR . 'wrench.png');
+                   'wrench' => TL_THEME_IMG_DIR . 'wrench.png',
+                   'event' => TL_THEME_IMG_DIR . 'event.svg',
+                   'home2' => TL_THEME_IMG_DIR . 'home.svg',
+                   'logout2' => TL_THEME_IMG_DIR . 'logout.svg',
+                   'requirement2' => TL_THEME_IMG_DIR . 'requirement.svg',
+                   'settings2' => TL_THEME_IMG_DIR . 'settings.svg',
+                   'specification2' => TL_THEME_IMG_DIR . 'specification.svg',
+                   'user2' => TL_THEME_IMG_DIR . 'user.svg',
+                   'user_settings2' => TL_THEME_IMG_DIR . 'user_settings.svg',
+                   );
                      
     return $dummy;
 	}

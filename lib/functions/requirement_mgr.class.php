@@ -600,9 +600,7 @@ function update($id,$version_id,$reqdoc_id,$title, $scope, $user_id, $status, $t
       $deleteAll = true;
     
       // I'm trying to speedup the next deletes
-      $sql = "/* $debugMsg */ " .
-             "SELECT NH.id FROM {$this->tables['nodes_hierarchy']} NH " .
-             "WHERE NH.parent_id ";
+      $sql="SELECT NH.id FROM {$this->tables['nodes_hierarchy']} NH WHERE NH.parent_id ";
       if( is_array($id) )
       {
         $sql .=  " IN (" .implode(',',$id) . ") ";
@@ -612,8 +610,6 @@ function update($id,$version_id,$reqdoc_id,$title, $scope, $user_id, $status, $t
         $sql .= "  = {$id} ";
       }
   
-      $sql .= " AND node_type_id=" . $this->node_types_descr_id['requirement_version'];
-      
       $children_rs=$this->db->fetchRowsIntoMap($sql,'id');
       $children = array_keys($children_rs); 
 
@@ -665,24 +661,18 @@ function update($id,$version_id,$reqdoc_id,$title, $scope, $user_id, $status, $t
 
       $implosion = implode(',',$children);
       $sql = "/* $debugMsg */ SELECT id from {$this->tables['nodes_hierarchy']} " .
-             " WHERE parent_id IN ( {$implosion} ) " .
-             "AND node_type_id=" .
-             $this->node_types_descr_id['requirement_revision'];
+             " WHERE parent_id IN ( {$implosion} ) ";
              
       $revisionSet = $this->db->fetchRowsIntoMap($sql,'id');
       if( !is_null($revisionSet) )
       {
-        $this->cfield_mgr->remove_all_design_values_from_node(array_keys($revisionSet));
+          $this->cfield_mgr->remove_all_design_values_from_node(array_keys($revisionSet));
               
-        $sql = "/* $debugMsg */ DELETE FROM {$this->tables['req_revisions']} " . 
-               "WHERE parent_id IN ( {$implosion} ) ";
-        $result = $this->db->exec_query($sql);
+          $sql = "DELETE FROM {$this->tables['req_revisions']} WHERE parent_id IN ( {$implosion} ) ";
+          $result = $this->db->exec_query($sql);
               
-        $sql = "/* $debugMsg */ DELETE FROM {$this->tables['nodes_hierarchy']} " .
-               "WHERE parent_id IN ( {$implosion} ) " .
-               "AND node_type_id=" . 
-              $this->node_types_descr_id['requirement_revision'];
-        $result = $this->db->exec_query($sql);
+          $sql = "DELETE FROM {$this->tables['nodes_hierarchy']} WHERE parent_id IN ( {$implosion} ) ";
+          $result = $this->db->exec_query($sql);
       }
       $this->cfield_mgr->remove_all_design_values_from_node((array)$children);
 
@@ -691,10 +681,10 @@ function update($id,$version_id,$reqdoc_id,$title, $scope, $user_id, $status, $t
       $sql = "DELETE FROM {$this->tables['req_versions']} " . $where['children'];
       $result = $this->db->exec_query($sql);
           
-      $sql = "DELETE FROM {$this->tables['nodes_hierarchy']} " . 
-             $where['children'] .
-             " AND node_type_id=" . $this->node_types_descr_id['requirement_version'];
+      $sql = "DELETE FROM {$this->tables['nodes_hierarchy']} " . $where['children'];
       $result = $this->db->exec_query($sql);
+
+
     } 
 
     $kaboom = $kaboom || ($deleteAll && $result);
@@ -703,9 +693,7 @@ function update($id,$version_id,$reqdoc_id,$title, $scope, $user_id, $status, $t
       $sql = "DELETE FROM {$this->object_table} " . $where['this'];
       $result = $this->db->exec_query($sql);
 
-      $sql = "DELETE FROM {$this->tables['nodes_hierarchy']} " . $where['this'] .
-             " AND node_type_id=" . $this->node_types_descr_id['requirement'];
-
+      $sql = "DELETE FROM {$this->tables['nodes_hierarchy']} " . $where['this'];
       $result = $this->db->exec_query($sql);
     }
   
@@ -910,7 +898,8 @@ function create_tc_from_requirement($mixIdReq,$srs_id, $user_id, $tproject_id = 
   if ( $this->reqCfg->use_req_spec_as_testsuite_name ) 
   {
       $full_path = $this->tree_mgr->get_path($srs_id);
-      $addition = " (" . lang_get("testsuite_title_addition") . ")";
+      //$addition = " (" . lang_get("testsuite_title_addition") . ")";
+      $addition = "";
       $truncate_limit = $this->fieldSize->testsuite_name - strlen($addition);
 
       // REQ_SPEC_A
@@ -3824,13 +3813,13 @@ function getCoverageCounterSet($itemSet)
 
     $sqlS = " $debugMsg SELECT COUNT(*) AS qty, source_id AS req_id " .
             " FROM {$this->tables['req_relations']} " .
-            " WHERE source_id IN ({$inSet}) ";
-    $sqlS .= (DB_TYPE == 'mssql') ? ' GROUP BY source_id ' : ' GROUP BY req_id ';
+            " WHERE source_id IN ({$inSet}) " .
+            ' GROUP BY req_id ';
 
     $sqlD = " $debugMsg SELECT COUNT(*) AS qty, destination_id AS req_id " .
             " FROM {$this->tables['req_relations']} " .
-            " WHERE destination_id IN ({$inSet}) ";
-    $sqlD .= (DB_TYPE == 'mssql') ? ' GROUP BY destination_id ' : ' GROUP BY req_id ';
+            " WHERE destination_id IN ({$inSet}) " .
+            ' GROUP BY req_id ';
 
     $sqlT = " SELECT SUM(qty) AS qty, req_id " .
             " FROM ($sqlS UNION ALL $sqlD) D ".

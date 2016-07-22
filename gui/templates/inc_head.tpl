@@ -20,10 +20,13 @@ editorType: used to understand if code for tinymce need to be loaded
 	<meta name="copyright" content="GNU" />
 	<meta name="robots" content="NOFOLLOW" />
 	<base href="{$basehref}"/>
-	<title>{$pageTitle|default:"TestLink"}</title>
+	<title>{$pageTitle|default:"KMM TestLink"}</title>
 	<link rel="icon" href="{$basehref}{$smarty.const.TL_THEME_IMG_DIR}favicon.ico" type="image/x-icon" />
 	
 {* ----- load CSS ------------------------------------------------------------------- *} 
+	
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+	
 	<style media="all" type="text/css">@import "{$css}";</style>
 
 	{if $use_custom_css}

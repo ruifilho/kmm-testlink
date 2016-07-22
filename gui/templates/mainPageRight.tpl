@@ -1,3 +1,4 @@
+
 {*
  Testlink Open Source Project - http://testlink.sourceforge.net/
  @filesource mainPageRight.tpl
@@ -32,7 +33,8 @@
       var rp1 = new Ext.Panel({ title:'{$labels.title_test_plan_mgmt}',
                                 collapsible:false, collapsed: false, draggable: false,
                                 contentEl: 'test_plan_mgmt_topics', baseCls: 'x-tl-panel',
-                                bodyStyle: "background:#c8dce8;padding:3px;", width:'100%',
+                                bodyStyle: "background:#FFF;",
+                                width:'100%',
                                 renderTo: 'menu_right_block_{$menuLayout.testPlan}'
                                 });
     }
@@ -48,7 +50,8 @@
       var rp2 = new Ext.Panel({ title: '{$labels.title_test_execution}',
                                 collapsible: false, collapsed: false, draggable: false,
                                 contentEl: 'test_execution_topics', baseCls: 'x-tl-panel',
-                                bodyStyle: "background:#c8dce8;padding:3px;", width: '100%',
+                                bodyStyle: "background:#FFF;", 
+                                width: '100%',
                                 renderTo: 'menu_right_block_{$menuLayout.testExecution}'                       
                               });
      }
@@ -64,7 +67,8 @@
       var rp3 = new Ext.Panel({ title: '{$labels.title_test_case_suite}',
                                 collapsible:false, collapsed: false, draggable: false,
                                 contentEl: 'testplan_contents_topics', baseCls: 'x-tl-panel',
-                                bodyStyle: "background:#c8dce8;padding:3px;", width: '100%',
+                                bodyStyle: "background:#FFF;", 
+                                width: '100%',
                                 renderTo: 'menu_right_block_{$menuLayout.testPlanContents}'
                               });
      }
