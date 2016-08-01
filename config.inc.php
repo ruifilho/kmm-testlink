@@ -195,7 +195,7 @@ $tlCfg->log_path = '/var/testlink/logs/'; /* unix example */
  *         user will receive a message on screen.
  * 'SILENT': same that FILE, but user will not receive message on screen.
  */
-$tlCfg->config_check_warning_mode = 'FILE';
+$tlCfg->config_check_warning_mode = 'SILENT';
 
 /**
  * ONCE_FOR_SESSION
@@ -442,10 +442,17 @@ $tlCfg->login_info = ''; // Empty by default
 $tlCfg->gui->projectView = new stdClass();
 $tlCfg->gui->projectView->pagination = new stdClass();
 $tlCfg->gui->projectView->pagination->enabled = true;
+$tlCfg->gui->projectView->pagination->length = '[20, 40, 60, -1], [20, 40, 60, "All"]';
 
 $tlCfg->gui->usersAssign = new stdClass();
 $tlCfg->gui->usersAssign->pagination = new stdClass();
 $tlCfg->gui->usersAssign->pagination->enabled = true;
+$tlCfg->gui->usersAssign->pagination->length = '[20, 40, 60, -1], [20, 40, 60, "All"]';
+
+$tlCfg->gui->planView = new stdClass();
+$tlCfg->gui->planView->pagination = new stdClass();
+$tlCfg->gui->planView->pagination->enabled = true;
+$tlCfg->gui->planView->pagination->length = '[20, 40, 60, -1], [20, 40, 60, "All"]';
 
 
 /** 
@@ -600,7 +607,8 @@ $tlCfg->gui->text_editor['steps_design'] = array('type' => 'ckeditor','toolbar' 
                                                  'height' => 100);
 
 $tlCfg->gui->text_editor['execution'] = array( 'type' => 'none');
-
+$tlCfg->gui->text_editor['edit_execution'] = array( 'type' => 'none', 'cols' => 80, 'rows' => 20);
+$tlCfg->gui->text_editor['display_execution_notes'] = array('type' => 'none', 'cols' => 80, 'rows' => 20);
 
 /** User can choose order of menu areas */
 $tlCfg->gui->layoutMainPageLeft = array( 'testProject' => 1, 'userAdministration' => 2 ,
@@ -841,6 +849,9 @@ $tlCfg->exec_cfg->steps_results_layout = 'horizontal';
 // 
 $tlCfg->exec_cfg->steps_exec = true;
 
+// this setting will work on AND mode with: 
+// $tlCfg->exec_cfg->steps_exec
+$tlCfg->exec_cfg->steps_exec_attachments = true;
 // When textarea is displayed to allow user to write execution notes
 // at step level, choose what to display:
 // 'empty'
@@ -876,6 +887,12 @@ $tlCfg->exec_cfg->copyLatestExecIssues->default = FALSE;
 // 'execution_id,bug_id,builds.name'
 // (see exec.inc.php, function get_bugs_for_exec())
 $tlCfg->exec_cfg->bugs_order_clause = ' ORDER BY builds.name,bug_id ';
+
+$tlCfg->exec_cfg->features = new stdClass();
+$tlCfg->exec_cfg->features->attachments = new stdClass();
+$tlCfg->exec_cfg->features->attachments->enabled = true;
+$tlCfg->exec_cfg->features->exec_duration = new stdClass();
+$tlCfg->exec_cfg->features->exec_duration->enabled = true;
 
 // ----------------------------------------------------------------------------
 /* [Test Specification] */
@@ -915,7 +932,7 @@ $tlCfg->testcase_cfg->duplicated_name_algorithm = new stdClass();
 //                    example: My Test Title 2
 //                    duplicated_name_algorithm->text is used as sprintf format mask
 $tlCfg->testcase_cfg->duplicated_name_algorithm->type = 'stringPrefix';
-$tlCfg->testcase_cfg->duplicated_name_algorithm->text = strftime("%Y%m%d-%H:%M:%S", time());
+$tlCfg->testcase_cfg->duplicated_name_algorithm->text = "%Y%m%d-%H:%M:%S";
 // $tlCfg->testcase_cfg->duplicated_name_algorithm->type = 'counterSuffix';
 // $tlCfg->testcase_cfg->duplicated_name_algorithm->text = " (%s)";
 

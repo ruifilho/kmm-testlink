@@ -812,7 +812,7 @@ function addToTestPlan(&$dbHandler,&$argsObj,&$guiObj,&$tplanMgr,&$tcaseMgr)
       {
         $features2['add'][$feature_id]['user_id'] = $argsObj->testerID;
         $features2['add'][$feature_id]['type'] = $types_map['testcase_execution']['id'];
-        $features2['add'][$feature_id]['status'] = $status_map['open']['id'];
+        $features2['add'][$feature_id]['status'] = $status_map['aberto']['id'];
         $features2['add'][$feature_id]['assigner_id'] = $argsObj->userID;
         $features2['add'][$feature_id]['tcase_id'] = $tcversion_tcase[$tcversion_id];
         $features2['add'][$feature_id]['tcversion_id'] = $tcversion_id;
